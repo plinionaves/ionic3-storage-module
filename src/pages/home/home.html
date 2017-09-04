@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="primary">
+
+    <ion-title>
+      Ionic Storage Tasks
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onSave('create')">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <p *ngIf="tasks && tasks.length == 0; else tasksList">No tasks.</p>
+
+  <ng-template #tasksList>
+    <ion-list>
+
+      <ion-item-sliding *ngFor="let task of tasks" #itemSliding>
+        <ion-item>
+          <ion-label>{{ task.title }}</ion-label>
+          <ion-toggle [ngModel]="task.done" (ngModelChange)="task.done=$event; taskService.update(task)"></ion-toggle>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button icon-only color="primary" (click)="onSave('update', itemSliding, task)">
+            <ion-icon name="create"></ion-icon>
+          </button>
+          <button ion-button icon-only color="danger" (click)="onDelete(task)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+  </ng-template>
+
+</ion-content>
