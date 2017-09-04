@@ -23,7 +23,10 @@ export class TaskService {
           }
         }).then(() => (!reverse) ? tasks : tasks.reverse());
 
-      }).catch(err => console.log('Erro ao abrir o storage: ', err));
+      }).catch((err: Error) => {
+        console.log('Erro ao abrir o storage: ', `${err.name}: `, err.message || err);
+        return Promise.reject(`Erro ao abrir o storage: ${err.name}: ${err.message || err}`);
+      });
 
   }
 
